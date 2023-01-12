@@ -1,1 +1,1 @@
-
+This is a template description for Nordic nRF-Applications
