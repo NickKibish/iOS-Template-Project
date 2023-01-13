@@ -16,6 +16,7 @@
 		01500F7A2970718700504009 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01500F792970718700504009 /* Quote.swift */; };
 		01500F7C297071A400504009 /* Quoter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01500F7B297071A400504009 /* Quoter.swift */; };
 		01500F7E2970748200504009 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01500F7D2970748200504009 /* ViewModel.swift */; };
+		01500F882970836900504009 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01500F872970836900504009 /* SnapshotHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		01500F792970718700504009 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		01500F7B297071A400504009 /* Quoter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quoter.swift; sourceTree = "<group>"; };
 		01500F7D2970748200504009 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		01500F872970836900504009 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 		01500F672970227E00504009 /* TemplateAppUITests */ = {
 			isa = PBXGroup;
 			children = (
+				01500F872970836900504009 /* SnapshotHelper.swift */,
 				01500F682970227E00504009 /* TemplateAppUITests.swift */,
 			);
 			path = TemplateAppUITests;
@@ -308,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01500F692970227E00504009 /* TemplateAppUITests.swift in Sources */,
+				01500F882970836900504009 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,7 +448,7 @@
 				CODE_SIGN_ENTITLEMENTS = TemplateApp/TemplateApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_ASSET_PATHS = "\"TemplateApp/Preview Content\"";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -488,7 +492,7 @@
 				CODE_SIGN_ENTITLEMENTS = TemplateApp/TemplateApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_ASSET_PATHS = "\"TemplateApp/Preview Content\"";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -530,7 +534,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -542,7 +546,9 @@
 				PROVISIONING_PROFILE = "e5c75067-3522-4d19-9f2e-6b66ea0cf1a6";
 				PROVISIONING_PROFILE_SPECIFIER = TemplateAppProvProfile;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -556,7 +562,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -568,7 +574,9 @@
 				PROVISIONING_PROFILE = "e5c75067-3522-4d19-9f2e-6b66ea0cf1a6";
 				PROVISIONING_PROFILE_SPECIFIER = TemplateAppProvProfile;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -581,7 +589,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -593,7 +601,9 @@
 				PROVISIONING_PROFILE = "e5c75067-3522-4d19-9f2e-6b66ea0cf1a6";
 				PROVISIONING_PROFILE_SPECIFIER = TemplateAppProvProfile;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -606,7 +616,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -618,7 +628,9 @@
 				PROVISIONING_PROFILE = "e5c75067-3522-4d19-9f2e-6b66ea0cf1a6";
 				PROVISIONING_PROFILE_SPECIFIER = TemplateAppProvProfile;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -692,7 +704,7 @@
 				CODE_SIGN_ENTITLEMENTS = TemplateApp/TemplateApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_ASSET_PATHS = "\"TemplateApp/Preview Content\"";
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -734,7 +746,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -746,7 +758,9 @@
 				PROVISIONING_PROFILE = "e5c75067-3522-4d19-9f2e-6b66ea0cf1a6";
 				PROVISIONING_PROFILE_SPECIFIER = TemplateAppProvProfile;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -759,7 +773,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = P3R8YQEV4L;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -771,7 +785,9 @@
 				PROVISIONING_PROFILE = "e5c75067-3522-4d19-9f2e-6b66ea0cf1a6";
 				PROVISIONING_PROFILE_SPECIFIER = TemplateAppProvProfile;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

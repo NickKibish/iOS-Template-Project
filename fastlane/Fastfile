@@ -18,6 +18,7 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new release build to the App Store"
   lane :release do
+    snapshot
     increment_build_number(xcodeproj: "TemplateApp.xcodeproj")
     match(type: "appstore")
     build_app(scheme: "TemplateApp")
