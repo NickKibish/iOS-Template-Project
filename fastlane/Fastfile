@@ -15,13 +15,108 @@
 
 default_platform(:ios)
 
+APP_STORE_CONNECT_TEAM_ID =       ENV["APP_STORE_CONNECT_TEAM_ID"]      # the team ID of your App Store Connect account
+APPLE_ISSUER_ID =                 ENV["APPLE_ISSUER_ID"]                # App Store Connect API Key 🔺Issuer ID
+APPLE_KEY_CONTENT =               ENV["APPLE_KEY_CONTENT"]              # App Store Connect API Key 🔺 Key file or Key content of .p8, check it out here: https://github.com/fastlane/fastlane/issues/18655#issuecomment-881764901
+APPLE_KEY_ID =                    ENV["APPLE_KEY_ID"]                   # App Store Connect API Key 🔺Key ID
+DEVELOPER_APP_ID =                ENV["DEVELOPER_APP_ID"]               # in App Store Connect, go to the app -> App Information -> Scroll down to the General Information section of your app and look for Apple ID.
+DEVELOPER_APP_IDENTIFIER =        ENV["DEVELOPER_APP_IDENTIFIER"]       # your app’s bundle identifier
+DEVELOPER_PORTAL_TEAM_ID =        ENV["DEVELOPER_PORTAL_TEAM_ID"]       # the ID of your Developer Portal team if you’re in multiple teams
+FASTLANE_APPLE_ID =               ENV["FASTLANE_APPLE_ID"]              # your Apple ID username (usually your email address)
+GIT_AUTHORIZATION =               ENV["GIT_AUTHORIZATION"]              # <YOUR_GITUSERNAME>:<YOUR_PERSONAL_ACCESS_TOKEN>, eg. joshuadeguzman:mysecretkeyyoudontwanttoknow
+MATCH_PASSWORD =                  ENV["MATCH_PASSWORD"]                 # the passphrase that you assigned when initializing match, will be used for decrypting the certificates and provisioning profiles
+PROVISIONING_PROFILE_SPECIFIER =  ENV["PROVISIONING_PROFILE_SPECIFIER"] # match AppStore <YOUR_APP_BUNDLE_IDENTIFIER>, eg. match AppStore com.domain.blabla.demo.
+TEMP_KEYCHAIN_PASSWORD =          ENV["TEMP_KEYCHAIN_PASSWORD"]         # the password of the temporary keychain
+TEMP_KEYCHAIN_USER =              ENV["TEMP_KEYCHAIN_USER"]             # the name of the temporary keychain
+
+def delete_temp_keychain(name)
+  delete_keychain(
+    name: name
+  ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+end
+
+def create_temp_keychain(name, password)
+  create_keychain(
+    name: name,
+    password: password,
+    unlock: false,
+    timeout: 0
+  )
+end
+
+def ensure_temp_keychain(name, password)
+  delete_temp_keychain(name)
+  create_temp_keychain(name, password)
+end
+
 platform :ios do
+  desc "Print variables"
+  lane :print_variables do 
+    puts "APP_STORE_CONNECT_TEAM_ID: #{APP_STORE_CONNECT_TEAM_ID}"
+    puts "APPLE_ISSUER_ID: #{APPLE_ISSUER_ID}"
+    puts "APPLE_KEY_CONTENT: #{APPLE_KEY_CONTENT}"
+    puts "APPLE_KEY_ID: #{APPLE_KEY_ID}"
+    puts "DEVELOPER_APP_ID: #{DEVELOPER_APP_ID}"
+    puts "DEVELOPER_APP_IDENTIFIER: #{DEVELOPER_APP_IDENTIFIER}"
+    puts "DEVELOPER_PORTAL_TEAM_ID: #{DEVELOPER_PORTAL_TEAM_ID}"
+    puts "FASTLANE_APPLE_ID: #{FASTLANE_APPLE_ID}"
+    puts "GIT_AUTHORIZATION: #{GIT_AUTHORIZATION}"
+    puts "MATCH_PASSWORD: #{MATCH_PASSWORD}"
+    puts "PROVISIONING_PROFILE_SPECIFIER: #{PROVISIONING_PROFILE_SPECIFIER}"
+    puts "TEMP_KEYCHAIN_PASSWORD: #{TEMP_KEYCHAIN_PASSWORD}"
+    puts "TEMP_KEYCHAIN_USER: #{TEMP_KEYCHAIN_USER}"
+  end 
+
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    keychain_name = TEMP_KEYCHAIN_USER
+    keychain_password = TEMP_KEYCHAIN_PASSWORD
+    ensure_temp_keychain(keychain_name, keychain_password)
+
+    api_key = app_store_connect_api_key(
+      key_id: APPLE_KEY_ID,
+      issuer_id: APPLE_ISSUER_ID,
+      key_content: APPLE_KEY_CONTENT,          
+      is_key_content_base64: true,  
+      duration: 1200,
+    )
+
+    increment_build_number(xcodeproj: "TemplateApp.xcodeproj")
+
+    match(
+      type: 'appstore',
+      app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
+      readonly: true,
+      keychain_name: keychain_name,
+      keychain_password: keychain_password,
+      api_key: api_key
+    )
+
+    build_app(
+      scheme: "TemplateApp", 
+      export_options: {
+        provisioningProfiles: { 
+            DEVELOPER_APP_ID => PROVISIONING_PROFILE_SPECIFIER
+        }
+      }
+    )
+
+    upload_to_app_store(
+      precheck_include_in_app_purchases: false
+    )
+
+    delete_temp_keychain(TEMP_KEYCHAIN_USER)
+  end
+
   desc "Push a new release build to the App Store"
   lane :release do
     snapshot
     increment_build_number(xcodeproj: "TemplateApp.xcodeproj")
     match(type: "appstore")
     build_app(scheme: "TemplateApp")
-    upload_to_app_store
+    upload_to_app_store(
+      
+    )
   end
 end
