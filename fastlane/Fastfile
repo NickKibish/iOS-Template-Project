@@ -127,7 +127,7 @@ platform :ios do
       api_key: api_key
     )
 
-    profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore"]
+    profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
 
     update_code_signing_settings(
       use_automatic_signing: false,
