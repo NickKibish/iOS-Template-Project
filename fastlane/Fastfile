@@ -157,7 +157,10 @@ platform :ios do
 
   lane :ci do
     setup_ci if ENV['CI']
-    match(type: 'appstore')
+    match(
+      type: 'appstore',
+      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
+    )
     build_app
     upload_to_testflight(skip_waiting_for_build_processing: true)
   end
