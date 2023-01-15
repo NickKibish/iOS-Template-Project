@@ -155,6 +155,13 @@ platform :ios do
     delete_temp_keychain(TEMP_KEYCHAIN_USER)
   end
 
+  lane :ci do
+    setup_ci if ENV['CI']
+    match(type: 'appstore')
+    build_app
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+  end
+
   desc "Push a new release build to the App Store"
   lane :release do
     snapshot
