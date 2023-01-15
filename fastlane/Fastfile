@@ -161,7 +161,7 @@ platform :ios do
       type: 'appstore',
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
     )
-    build_app
+    build_app(scheme: "TemplateApp")
     upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 
