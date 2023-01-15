@@ -132,6 +132,8 @@ platform :ios do
     update_code_signing_settings(
       use_automatic_signing: false,
       team_id: DEVELOPER_PORTAL_TEAM_ID,
+      targets: ["TemplateApp"],
+      build_configurations: ["Release"],
       code_sign_identity: "iPhone Distribution",
       profile_name: profile
     )
@@ -146,15 +148,9 @@ platform :ios do
       }
     )
 
-    update_code_signing_settings(
-      use_automatic_signing: true,
-      team_id: DEVELOPER_PORTAL_TEAM_ID,
-      profile_name: "Automatic"
-    )
-
-    upload_to_app_store(
-      precheck_include_in_app_purchases: false
-    )
+    # upload_to_app_store(
+    #   precheck_include_in_app_purchases: false
+    # )
 
     delete_temp_keychain(TEMP_KEYCHAIN_USER)
   end
