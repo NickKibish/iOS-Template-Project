@@ -49,6 +49,17 @@ def ensure_temp_keychain(name, password)
   create_temp_keychain(name, password)
 end
 
+def disable_auto_code_signing(profile)
+  update_code_signing_settings(
+      use_automatic_signing: false,
+      team_id: DEVELOPER_PORTAL_TEAM_ID,
+      targets: ["TemplateApp"],
+      build_configurations: ["Release"],
+      code_sign_identity: "iPhone Distribution",
+      profile_name: profile
+    )
+end
+
 platform :ios do
   desc "Setup keychain"
   lane :setup_keychain do
@@ -82,18 +93,15 @@ platform :ios do
     )
   end
 
-  lane :build do
+  lane :prebuild do
     profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
   
-    update_code_signing_settings(
-      use_automatic_signing: false,
-      team_id: DEVELOPER_PORTAL_TEAM_ID,
-      targets: ["TemplateApp"],
-      build_configurations: ["Release"],
-      code_sign_identity: "iPhone Distribution",
-      profile_name: profile
-    )
-  
+    disable_auto_code_signing(profile)
+  end 
+
+  lane :build do
+    profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
+    
     build_app(
       scheme: "TemplateApp",
       export_method: "app-store",
@@ -109,6 +117,7 @@ platform :ios do
   lane :beta do
     setup_keychain
     fetch_certificates
+    prebuild
     build
 
     upload_to_app_store(

@@ -15,13 +15,37 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios print_variables
+### ios setup_keychain
 
 ```sh
-[bundle exec] fastlane ios print_variables
+[bundle exec] fastlane ios setup_keychain
 ```
 
-Print variables
+Setup keychain
+
+### ios fetch_certificates
+
+```sh
+[bundle exec] fastlane ios fetch_certificates
+```
+
+Fetch certificates and provisioning profiles
+
+### ios prebuild
+
+```sh
+[bundle exec] fastlane ios prebuild
+```
+
+
+
+### ios build
+
+```sh
+[bundle exec] fastlane ios build
+```
+
+
 
 ### ios beta
 
