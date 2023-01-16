@@ -39,8 +39,10 @@ def create_temp_keychain(name, password)
   create_keychain(
     name: name,
     password: password,
-    unlock: false,
-    timeout: 0
+    default_keychain: true,
+    unlock: true,
+    timeout: 3600,
+    lock_when_sleeps: false
   )
 end
 
@@ -81,7 +83,18 @@ platform :ios do
     increment_build_number({
       build_number: latest_testflight_build_number + 1
     })
+
+    sync_code_signing(
+      readonly: true,
+      type: "appstore",
+      keychain_name: TEMP_KEYCHAIN_USER,
+      keychain_password: TEMP_KEYCHAIN_PASSWORD,
+      shallow_clone: true,
+    )
+
+    sh('security find-certificate -a')
     
+=begin
     match(
       type: 'appstore',
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
@@ -91,6 +104,7 @@ platform :ios do
       keychain_password: TEMP_KEYCHAIN_PASSWORD,
       api_key: api_key
     )
+=end
   end
 
   lane :prebuild do
