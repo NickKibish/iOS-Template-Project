@@ -50,61 +50,15 @@ def ensure_temp_keychain(name, password)
 end
 
 platform :ios do
-  desc "Print variables"
-  lane :print_variables do 
-    puts "APP_STORE_CONNECT_TEAM_ID: #{APP_STORE_CONNECT_TEAM_ID}"
-    puts "APPLE_ISSUER_ID: #{APPLE_ISSUER_ID}"
-    puts "APPLE_KEY_CONTENT: #{APPLE_KEY_CONTENT}"
-    puts "APPLE_KEY_ID: #{APPLE_KEY_ID}"
-    puts "DEVELOPER_APP_ID: #{DEVELOPER_APP_ID}"
-    puts "DEVELOPER_APP_IDENTIFIER: #{DEVELOPER_APP_IDENTIFIER}"
-    puts "DEVELOPER_PORTAL_TEAM_ID: #{DEVELOPER_PORTAL_TEAM_ID}"
-    puts "FASTLANE_APPLE_ID: #{FASTLANE_APPLE_ID}"
-    puts "GIT_AUTHORIZATION: #{GIT_AUTHORIZATION}"
-    puts "MATCH_PASSWORD: #{MATCH_PASSWORD}"
-    puts "PROVISIONING_PROFILE_SPECIFIER: #{PROVISIONING_PROFILE_SPECIFIER}"
-    puts "TEMP_KEYCHAIN_PASSWORD: #{TEMP_KEYCHAIN_PASSWORD}"
-    puts "TEMP_KEYCHAIN_USER: #{TEMP_KEYCHAIN_USER}"
-
-    # keychain_name = TEMP_KEYCHAIN_USER
-    # keychain_password = TEMP_KEYCHAIN_PASSWORD
-    # ensure_temp_keychain(keychain_name, keychain_password)
-
-    # delete_temp_keychain(TEMP_KEYCHAIN_USER)
-
-    api_key = app_store_connect_api_key(
-      key_id: APPLE_KEY_ID,
-      issuer_id: APPLE_ISSUER_ID,
-      key_content: APPLE_KEY_CONTENT,          
-      is_key_content_base64: true,  
-      duration: 1200,
-    )
-
-    match(
-      type: 'appstore',
-      app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
-      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
-      readonly: true,
-      # keychain_name: keychain_name,
-      # keychain_password: keychain_password,
-      api_key: api_key
-    )
-
-    prov_profile = ENV["sigh_me.themoji.beta_appstore"]
-    profile_name = ENV["sigh_me.themoji.beta_appstore_profile-name"]
-    dev_team_id = ENV["sigh_me.themoji.beta_appstore_team-id"]
-
-    puts "Pofile UUID: #{prov_profile}"
-    puts "Profile Name: #{profile_name}"
-    puts "Team ID: #{dev_team_id}"
-  end 
-
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
+  desc "Setup keychain"
+  lane :setup_keychain do
     keychain_name = TEMP_KEYCHAIN_USER
     keychain_password = TEMP_KEYCHAIN_PASSWORD
     ensure_temp_keychain(keychain_name, keychain_password)
+  end
 
+  desc "Fetch certificates and provisioning profiles"
+  lane :fetch_certificates do
     api_key = app_store_connect_api_key(
       key_id: APPLE_KEY_ID,
       issuer_id: APPLE_ISSUER_ID,
@@ -112,7 +66,7 @@ platform :ios do
       is_key_content_base64: true,  
       duration: 1200,
     )
-
+  
     increment_build_number({
       build_number: latest_testflight_build_number + 1
     })
@@ -122,13 +76,15 @@ platform :ios do
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
       readonly: true,
-      keychain_name: keychain_name,
-      keychain_password: keychain_password,
+      # keychain_name: keychain_name,
+      # keychain_password: keychain_password,
       api_key: api_key
     )
+  end
 
+  lane :build do
     profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
-
+  
     update_code_signing_settings(
       use_automatic_signing: false,
       team_id: DEVELOPER_PORTAL_TEAM_ID,
@@ -137,7 +93,7 @@ platform :ios do
       code_sign_identity: "iPhone Distribution",
       profile_name: profile
     )
-
+  
     build_app(
       scheme: "TemplateApp",
       export_method: "app-store",
@@ -147,22 +103,18 @@ platform :ios do
         }
       }
     )
-
-    # upload_to_app_store(
-    #   precheck_include_in_app_purchases: false
-    # )
-
-    delete_temp_keychain(TEMP_KEYCHAIN_USER)
   end
 
-  lane :ci do
-    setup_ci if ENV['CI']
-    match(
-      type: 'appstore',
-      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    fetch_certificates
+    build
+
+    upload_to_app_store(
+      precheck_include_in_app_purchases: false
     )
-    build_app(scheme: "TemplateApp")
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+
+    delete_temp_keychain(TEMP_KEYCHAIN_USER)
   end
 
   desc "Push a new release build to the App Store"
