@@ -85,7 +85,7 @@ platform :ios do
     })
 
     sync_code_signing(
-      readonly: true,
+      # readonly: true,
       type: "appstore",
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
       keychain_name: TEMP_KEYCHAIN_USER,
