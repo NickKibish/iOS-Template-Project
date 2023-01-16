@@ -70,6 +70,12 @@ platform :ios do
     ensure_temp_keychain(keychain_name, keychain_password)
   end
 
+  lane :increment_build_number do 
+    increment_build_number({
+      build_number: latest_testflight_build_number + 1
+    })
+  end 
+
   desc "Fetch certificates and provisioning profiles"
   lane :fetch_certificates do
     api_key = app_store_connect_api_key(
@@ -79,24 +85,7 @@ platform :ios do
       is_key_content_base64: true,  
       duration: 1200,
     )
-  
-    increment_build_number({
-      build_number: latest_testflight_build_number + 1
-    })
 
-    sync_code_signing(
-      # readonly: true,
-      type: "appstore",
-      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
-      keychain_name: TEMP_KEYCHAIN_USER,
-      keychain_password: TEMP_KEYCHAIN_PASSWORD,
-      shallow_clone: true,
-      ignore_profiles_with_different_name: false 
-    )
-
-    sh('security find-certificate -a')
-    
-=begin
     match(
       type: 'appstore',
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
@@ -106,7 +95,6 @@ platform :ios do
       keychain_password: TEMP_KEYCHAIN_PASSWORD,
       api_key: api_key
     )
-=end
   end
 
   lane :prebuild do
@@ -121,11 +109,11 @@ platform :ios do
     build_app(
       scheme: "TemplateApp",
       export_method: "app-store",
-      # export_options: {
-      #   provisioningProfiles: { 
-      #       DEVELOPER_APP_ID => profile
-      #   }
-      # }
+      export_options: {
+        provisioningProfiles: { 
+            DEVELOPER_APP_ID => profile
+        }
+      }
     )
   end
 
@@ -133,8 +121,9 @@ platform :ios do
   lane :beta do
     setup_keychain
     fetch_certificates
-    # prebuild
+    prebuild
     build
+    increment_build_number
 
     upload_to_app_store(
       precheck_include_in_app_purchases: false
