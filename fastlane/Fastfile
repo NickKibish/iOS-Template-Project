@@ -107,6 +107,7 @@ platform :ios do
 
   desc "Push a new beta build to TestFlight"
   lane :beta do
+    setup_keychain
     fetch_certificates
     build
 
