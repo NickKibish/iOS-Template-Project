@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Setup keychain
 
+### ios update_build_number
+
+```sh
+[bundle exec] fastlane ios update_build_number
+```
+
+
+
 ### ios fetch_certificates
 
 ```sh

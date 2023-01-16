@@ -28,6 +28,7 @@ MATCH_PASSWORD =                  ENV["MATCH_PASSWORD"]                 # the pa
 PROVISIONING_PROFILE_SPECIFIER =  ENV["PROVISIONING_PROFILE_SPECIFIER"] # match AppStore <YOUR_APP_BUNDLE_IDENTIFIER>, eg. match AppStore com.domain.blabla.demo.
 TEMP_KEYCHAIN_PASSWORD =          ENV["TEMP_KEYCHAIN_PASSWORD"]         # the password of the temporary keychain
 TEMP_KEYCHAIN_USER =              ENV["TEMP_KEYCHAIN_USER"]             # the name of the temporary keychain
+TARGET =                          "TemplateApp"                         # the name of your target
 
 def delete_temp_keychain(name)
   delete_keychain(
@@ -70,7 +71,7 @@ platform :ios do
     ensure_temp_keychain(keychain_name, keychain_password)
   end
 
-  lane :increment_build_number do 
+  lane :update_build_number do 
     increment_build_number({
       build_number: latest_testflight_build_number + 1
     })
@@ -90,7 +91,7 @@ platform :ios do
       type: 'appstore',
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
-      readonly: true,
+      # readonly: true,
       keychain_name: TEMP_KEYCHAIN_USER,
       keychain_password: TEMP_KEYCHAIN_PASSWORD,
       api_key: api_key
@@ -99,8 +100,17 @@ platform :ios do
 
   lane :prebuild do
     profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
-  
-    disable_auto_code_signing(profile)
+
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      team_id: DEVELOPER_PORTAL_TEAM_ID,
+      targets: [TARGET],
+      build_configurations: ["Release"],
+      bundle_identifier: DEVELOPER_APP_IDENTIFIER,
+      code_sign_identity: "iPhone Distribution",
+      sdk: "iphoneos*",
+      profile_name: profile
+    )
   end 
 
   lane :build do
@@ -122,8 +132,8 @@ platform :ios do
     setup_keychain
     fetch_certificates
     prebuild
+    update_build_number
     build
-    increment_build_number
 
     upload_to_app_store(
       precheck_include_in_app_purchases: false
