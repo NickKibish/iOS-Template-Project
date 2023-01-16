@@ -120,11 +120,11 @@ platform :ios do
     build_app(
       scheme: "TemplateApp",
       export_method: "app-store",
-      export_options: {
-        provisioningProfiles: { 
-            DEVELOPER_APP_ID => profile
-        }
-      }
+      # export_options: {
+      #   provisioningProfiles: { 
+      #       DEVELOPER_APP_ID => profile
+      #   }
+      # }
     )
   end
 
