@@ -65,8 +65,8 @@ end
 
 platform :ios do
   desc "Print 'Hello World'"
-  lane :hello_world do
-    puts "Hello World"
+  lane :tests do
+    run_tests(scheme: "TemplateAppTests")
   end
 
   desc "Setup keychain"
@@ -76,14 +76,8 @@ platform :ios do
     ensure_temp_keychain(keychain_name, keychain_password)
   end
 
-  lane :update_build_number do 
-    increment_build_number({
-      build_number: latest_testflight_build_number + 1
-    })
-  end 
-
-  desc "Fetch certificates and provisioning profiles"
-  lane :fetch_certificates do
+  desc "Setup Apple API Key"
+  lane :setup_api_key do
     api_key = app_store_connect_api_key(
       key_id: APPLE_KEY_ID,
       issuer_id: APPLE_ISSUER_ID,
@@ -91,7 +85,10 @@ platform :ios do
       is_key_content_base64: true,  
       duration: 1200,
     )
-
+  end
+  
+  desc "Fetch certificates and provisioning profiles"
+  lane :fetch_certificates do
     match(
       type: 'appstore',
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
@@ -103,7 +100,8 @@ platform :ios do
     )
   end
 
-  lane :prebuild do
+  desc "Update Code Signing Settings"
+  lane :update_signin_settings do
     # Profile name that 'match' fetched or created
     profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
 
@@ -117,6 +115,12 @@ platform :ios do
       sdk: "iphoneos*",
       profile_name: profile
     )
+  end 
+
+  lane :update_build_number do 
+    increment_build_number({
+      build_number: latest_testflight_build_number + 1
+    })
   end 
 
   lane :build do
@@ -142,16 +146,14 @@ platform :ios do
 
   desc "Push a new build to AppStore"
   lane :reloase do
+    tests
     setup_keychain
+    setup_api_key
     fetch_certificates
-    prebuild
+    update_signin_settings
     update_build_number
     build
-
     capture_ios_screenshots
-
     upload
-
-    delete_temp_keychain(TEMP_KEYCHAIN_USER)
   end
 end

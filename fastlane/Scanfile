@@ -1,0 +1,6 @@
+scheme("TemplateApp")
+open_report(true)
+clean(true)
+skip_build(false)
+devices(["iPhone 14"])
+parallel_testing(false)

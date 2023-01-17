@@ -15,6 +15,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios tests
+
+```sh
+[bundle exec] fastlane ios tests
+```
+
+Print 'Hello World'
+
 ### ios setup_keychain
 
 ```sh
@@ -23,13 +31,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Setup keychain
 
-### ios update_build_number
+### ios setup_api_key
 
 ```sh
-[bundle exec] fastlane ios update_build_number
+[bundle exec] fastlane ios setup_api_key
 ```
 
-
+Setup Apple API Key
 
 ### ios fetch_certificates
 
@@ -39,10 +47,18 @@ Setup keychain
 
 Fetch certificates and provisioning profiles
 
-### ios prebuild
+### ios update_signin_settings
 
 ```sh
-[bundle exec] fastlane ios prebuild
+[bundle exec] fastlane ios update_signin_settings
+```
+
+Update Code Signing Settings
+
+### ios update_build_number
+
+```sh
+[bundle exec] fastlane ios update_build_number
 ```
 
 
@@ -55,21 +71,21 @@ Fetch certificates and provisioning profiles
 
 
 
-### ios beta
+### ios upload
 
 ```sh
-[bundle exec] fastlane ios beta
+[bundle exec] fastlane ios upload
 ```
 
-Push a new beta build to TestFlight
 
-### ios release
+
+### ios reloase
 
 ```sh
-[bundle exec] fastlane ios release
+[bundle exec] fastlane ios reloase
 ```
 
-Push a new release build to the App Store
+Push a new build to AppStore
 
 ----
 
