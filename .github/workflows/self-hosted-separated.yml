@@ -21,21 +21,32 @@ jobs:
         uses: maierj/fastlane-action@v1.4.0
         with:
           lane: setup_keychain
+
+      - name: Fetch Certificates
         uses: maierj/fastlane-action@v1.4.0
         with:
           lane: fetch_certificates
+
+      - name: Prebuild 
         uses: maierj/fastlane-action@v1.4.0
         with:
           lane: prebuild
+
+      - name: Update build number
         uses: maierj/fastlane-action@v1.4.0
         with:
           lane: update_build_number
+
+      - name: Build
         uses: maierj/fastlane-action@v1.4.0
         with:
           lane: build
+      - name: Capture Screenshots
         uses: maierj/fastlane-action@v1.4.0
         with:
           lane: capture_ios_screenshots
+
+      - name: Upload
         uses: maierj/fastlane-action@v1.4.0
         with:
           lane: upload
