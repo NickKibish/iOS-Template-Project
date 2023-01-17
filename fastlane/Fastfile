@@ -64,6 +64,11 @@ def disable_auto_code_signing(profile)
 end
 
 platform :ios do
+  desc "Print 'Hello World'"
+  lane :hello_world do
+    puts "Hello World"
+  end
+
   desc "Setup keychain"
   lane :setup_keychain do
     keychain_name = TEMP_KEYCHAIN_USER
