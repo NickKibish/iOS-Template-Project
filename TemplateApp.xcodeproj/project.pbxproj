@@ -17,6 +17,7 @@
 		01500F7C297071A400504009 /* Quoter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01500F7B297071A400504009 /* Quoter.swift */; };
 		01500F7E2970748200504009 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01500F7D2970748200504009 /* ViewModel.swift */; };
 		01500F882970836900504009 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01500F872970836900504009 /* SnapshotHelper.swift */; };
+		01500F8A2976F2FE00504009 /* QuoterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01500F892976F2FE00504009 /* QuoterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		01500F7B297071A400504009 /* Quoter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quoter.swift; sourceTree = "<group>"; };
 		01500F7D2970748200504009 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		01500F872970836900504009 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+		01500F892976F2FE00504009 /* QuoterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				01500F5E2970227E00504009 /* TemplateAppTests.swift */,
+				01500F892976F2FE00504009 /* QuoterTests.swift */,
 			);
 			path = TemplateAppTests;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01500F5F2970227E00504009 /* TemplateAppTests.swift in Sources */,
+				01500F8A2976F2FE00504009 /* QuoterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
