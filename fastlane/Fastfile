@@ -91,7 +91,7 @@ platform :ios do
       type: 'appstore',
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
-      # readonly: true,
+      readonly: true,
       keychain_name: TEMP_KEYCHAIN_USER,
       keychain_password: TEMP_KEYCHAIN_PASSWORD,
       api_key: api_key
@@ -99,6 +99,7 @@ platform :ios do
   end
 
   lane :prebuild do
+    # Profile name that 'match' fetched or created
     profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
 
     update_code_signing_settings(
@@ -119,6 +120,7 @@ platform :ios do
     build_app(
       scheme: "TemplateApp",
       export_method: "app-store",
+      clean: true,
       export_options: {
         provisioningProfiles: { 
             DEVELOPER_APP_ID => profile
@@ -127,29 +129,24 @@ platform :ios do
     )
   end
 
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
+  lane :upload do 
+    upload_to_app_store(
+      precheck_include_in_app_purchases: false
+    )
+  end 
+
+  desc "Push a new build to AppStore"
+  lane :reloase do
     setup_keychain
     fetch_certificates
     prebuild
     update_build_number
     build
 
-    upload_to_app_store(
-      precheck_include_in_app_purchases: false
-    )
+    capture_ios_screenshots
+
+    upload
 
     delete_temp_keychain(TEMP_KEYCHAIN_USER)
-  end
-
-  desc "Push a new release build to the App Store"
-  lane :release do
-    snapshot
-    increment_build_number(xcodeproj: "TemplateApp.xcodeproj")
-    match(type: "appstore")
-    build_app(scheme: "TemplateApp")
-    upload_to_app_store(
-      
-    )
   end
 end
