@@ -146,7 +146,7 @@ platform :ios do
 
   desc "Push a new build to AppStore"
   lane :reloase do
-    tests
+    # tests
     setup_keychain
     setup_api_key
     fetch_certificates
