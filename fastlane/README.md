@@ -47,6 +47,14 @@ Setup keychain
 
 Fetch certificates and provisioning profiles
 
+### ios fetch_develop_certificates
+
+```sh
+[bundle exec] fastlane ios fetch_develop_certificates
+```
+
+Fetch develop certificates and provisioning profiles
+
 ### ios update_signin_settings
 
 ```sh

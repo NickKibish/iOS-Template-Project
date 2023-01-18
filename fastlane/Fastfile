@@ -78,7 +78,7 @@ end
 platform :ios do
   desc "Print a system name: CI or Local"
   lane :print_system_name do
-    puts "System name: #{ENV['CI'] ? 'CI' : 'Local'}"
+    puts "System name: #{is_ci ? 'CI' : 'Local'}"
   end
 
   desc "Print 'Hello World'"
@@ -102,6 +102,19 @@ platform :ios do
       readonly: true,
       keychain_name: TEMP_KEYCHAIN_USER,
       keychain_password: TEMP_KEYCHAIN_PASSWORD,
+      api_key: get_api_key
+    )
+  end
+
+  desc "Fetch develop certificates and provisioning profiles"
+  lane :fetch_develop_certificates do
+    match(
+      type: 'development',
+      app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
+      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
+      # readonly: true,
+      # keychain_name: TEMP_KEYCHAIN_USER,
+      # keychain_password: TEMP_KEYCHAIN_PASSWORD,
       api_key: get_api_key
     )
   end
