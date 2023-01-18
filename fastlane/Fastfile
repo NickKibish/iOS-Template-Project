@@ -122,7 +122,7 @@ platform :ios do
   desc "Update Code Signing Settings"
   lane :update_signin_settings do
     # Profile name that 'match' fetched or created
-    profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
+    # profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
 
     update_code_signing_settings(
       use_automatic_signing: false,
@@ -165,13 +165,15 @@ platform :ios do
 
   desc "Push a new build to AppStore"
   lane :reloase do
-    # tests
-    setup_keychain
-    fetch_certificates
-    update_signin_settings
+    if is_ci
+      setup_keychain
+      fetch_certificates
+      update_signin_settings
+    end
+    tests
     update_build_number
     build
-    capture_ios_screenshots
-    upload
+    # capture_ios_screenshots
+    # upload
   end
 end
