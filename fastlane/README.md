@@ -15,6 +15,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios print_system_name
+
+```sh
+[bundle exec] fastlane ios print_system_name
+```
+
+Print a system name: CI or Local
+
 ### ios tests
 
 ```sh
@@ -30,14 +38,6 @@ Print 'Hello World'
 ```
 
 Setup keychain
-
-### ios setup_api_key
-
-```sh
-[bundle exec] fastlane ios setup_api_key
-```
-
-Setup Apple API Key
 
 ### ios fetch_certificates
 

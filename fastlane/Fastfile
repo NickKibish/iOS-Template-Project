@@ -76,6 +76,11 @@ def get_api_key
 end
 
 platform :ios do
+  desc "Print a system name: CI or Local"
+  lane :print_system_name do
+    puts "System name: #{ENV['CI'] ? 'CI' : 'Local'}"
+  end
+
   desc "Print 'Hello World'"
   lane :tests do
     run_tests(scheme: "TemplateAppTests")
