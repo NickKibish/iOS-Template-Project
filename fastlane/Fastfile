@@ -122,7 +122,7 @@ platform :ios do
   desc "Update Code Signing Settings"
   lane :update_signin_settings do
     # Profile name that 'match' fetched or created
-    # profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
+    profile = ENV["sigh_#{DEVELOPER_APP_IDENTIFIER}_appstore_profile-name"]
 
     update_code_signing_settings(
       use_automatic_signing: false,
@@ -132,7 +132,7 @@ platform :ios do
       bundle_identifier: DEVELOPER_APP_IDENTIFIER,
       code_sign_identity: "iPhone Distribution",
       sdk: "iphoneos*",
-      # profile_name: profile
+      profile_name: profile
     )
   end 
 
@@ -170,9 +170,9 @@ platform :ios do
       fetch_certificates
       update_signin_settings
     end
-    # tests
     update_build_number
     build
+    # tests
     # capture_ios_screenshots
     # upload
   end
