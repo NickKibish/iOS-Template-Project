@@ -170,9 +170,9 @@ platform :ios do
       fetch_certificates
       update_signin_settings
     end
+    tests
     update_build_number
     build
-    # tests
     # capture_ios_screenshots
     # upload
   end
