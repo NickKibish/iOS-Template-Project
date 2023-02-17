@@ -10,6 +10,6 @@ devices([
 clear_previous_screenshots(true)
 override_status_bar(true)
 dark_mode(true)
-erase_simulator(true)
-concurrent_simulators(true)
+# erase_simulator(true)
+# concurrent_simulators(true)
 app_identifier(ENV["DEVELOPER_APP_IDENTIFIER"])
