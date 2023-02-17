@@ -91,3 +91,4 @@ fastlane/screenshots/**/*.html
 iOSInjectionProject/
 
 .env*
+TemplateApp.app
