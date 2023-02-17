@@ -1,5 +1,7 @@
 # iOS-Template-Project
 
+[![Self Hosted CD](https://github.com/NickKibish/iOS-Template-Project/actions/workflows/self-hosted.yml/badge.svg)](https://github.com/NickKibish/iOS-Template-Project/actions/workflows/self-hosted.yml)
+
 ## Setup Environment 
 ### `.env` local file for `fastlane`
 * Create a `.env` file in the same directory as the `Fastfile` and add the following
