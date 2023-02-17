@@ -112,9 +112,9 @@ platform :ios do
       type: 'development',
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
       git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
-      # readonly: true,
-      # keychain_name: TEMP_KEYCHAIN_USER,
-      # keychain_password: TEMP_KEYCHAIN_PASSWORD,
+      readonly: true,
+      keychain_name: TEMP_KEYCHAIN_USER,
+      keychain_password: TEMP_KEYCHAIN_PASSWORD,
       api_key: get_api_key
     )
   end
@@ -164,16 +164,22 @@ platform :ios do
   end 
 
   desc "Push a new build to AppStore"
-  lane :reloase do
+  lane :release do |options|
     if is_ci
       setup_keychain
       fetch_certificates
       update_signin_settings
     end
+    
     tests
     update_build_number
     build
-    # capture_ios_screenshots
-    # upload
+    
+    if options[:capture_screenshots]
+      capture_ios_screenshots
+    end
+
+    upload
   end
+
 end
