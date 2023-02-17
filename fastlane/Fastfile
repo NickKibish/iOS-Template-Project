@@ -170,7 +170,7 @@ platform :ios do
       fetch_certificates
       update_signin_settings
     end
-    
+
     tests
     update_build_number
     build
@@ -180,6 +180,11 @@ platform :ios do
     end
 
     upload
+  end
+
+  dosc: "Take screenshots and upload to AppStore"
+  lane :release_with_screenshots do
+    release(capture_screenshots: true)
   end
 
 end

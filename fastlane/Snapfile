@@ -1,11 +1,10 @@
 devices([
-    #  "iPad Pro (12.9-inch) (6th generation)",
-    #  "iPad mini (6th generation)",
-    #  "iPhone 8 Plus",
-     "iPhone 13 mini",
-     "iPhone 14",
-     "iPhone 14 Plus",
-     "iPhone SE (3rd generation)"
+    "iPhone 14 Pro",
+    "iPhone 14 Pro Max",
+    "iPhone 8",
+    "iPhone 8 Plus",
+    "iPad Pro (11-inch) (4th generation)",
+    "iPad Pro (12.9-inch) (6th generation)",
 ])
 
 clear_previous_screenshots(true)
