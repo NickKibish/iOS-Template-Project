@@ -87,13 +87,21 @@ Update Code Signing Settings
 
 
 
-### ios reloase
+### ios release
 
 ```sh
-[bundle exec] fastlane ios reloase
+[bundle exec] fastlane ios release
 ```
 
 Push a new build to AppStore
+
+### ios release_with_screenshots
+
+```sh
+[bundle exec] fastlane ios release_with_screenshots
+```
+
+Take screenshots and upload to AppStore
 
 ----
 

@@ -182,7 +182,7 @@ platform :ios do
     upload
   end
 
-  dosc: "Take screenshots and upload to AppStore"
+  desc "Take screenshots and upload to AppStore"
   lane :release_with_screenshots do
     release capture_screenshots: true
   end
