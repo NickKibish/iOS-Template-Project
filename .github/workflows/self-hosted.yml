@@ -17,11 +17,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
       
-      - name: Setup Ruby, JRuby and TruffleRuby
-        uses: ruby/setup-ruby@v1.138.0
-        with:
-          ruby-version: '2.7.7' # Not needed with a .ruby-version file
-          bundler-cache: true
+#      - name: Setup Ruby, JRuby and TruffleRuby
+#        uses: ruby/setup-ruby@v1.138.0
+#        with:
+#          ruby-version: '2.7.7' # Not needed with a .ruby-version file
+#          bundler-cache: true
 
       - name: Deploy iOS Beta to TestFlight via Fastlane
         uses: maierj/fastlane-action@v1.4.0
