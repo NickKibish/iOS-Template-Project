@@ -15,7 +15,7 @@ security create-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
 security default-keychain -s "$KEYCHAIN_PATH"
 security unlock-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
 security list-keychains
-security import certificate.cer -t cert -k "$TEMP_KEYCHAIN_USER" 
-security import key.p12 -t pkcs12 -k "$TEMP_KEYCHAIN_USER"
+security import certificate.cer -t cert -k "$KEYCHAIN_PATH" 
+security import key.p12 -t pkcs12 -k "$KEYCHAIN_PATH"
 security set-key-partition-list -S apple-tool:,apple: -s -k $TEMP_KEYCHAIN_PASSWORD $KEYCHAIN_PATH
 
