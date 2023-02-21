@@ -11,9 +11,9 @@ echo $SIGN_PROV_PROFILE_BASE64 | base64 --decode -i - > profile.mobileprovision
 echo "Create Keychain and import certificates and profiles"
 KEYCHAIN_PATH=~/Library/Keychains/${TEMP_KEYCHAIN_USER}.keychain
 security create-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
-security unlock-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
-security import certificate.cer -t cert -k "$TEMP_KEYCHAIN_USER" 
-security import key.p12 -t pkcs12 -k "$TEMP_KEYCHAIN_USER"
-security set-key-partition-list -S apple-tool:,apple: -s -k $TEMP_KEYCHAIN_PASSWORD $KEYCHAIN_PATH
-
 security list-keychains
+security unlock-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+# security import certificate.cer -t cert -k "$TEMP_KEYCHAIN_USER" 
+# security import key.p12 -t pkcs12 -k "$TEMP_KEYCHAIN_USER"
+# security set-key-partition-list -S apple-tool:,apple: -s -k $TEMP_KEYCHAIN_PASSWORD $KEYCHAIN_PATH
+
