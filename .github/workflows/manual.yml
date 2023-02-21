@@ -35,19 +35,19 @@ jobs:
           SIGN_KEY_BASE64: ${{ secrets.SIGN_KEY_BASE64 }}
           SIGN_PROV_PROFILE_BASE64: ${{ secrets.SIGN_PROV_PROFILE_BASE64 }}
 
-      # - name: Build archive 
-      #   run: |
-      #     xcodebuild -sdk iphoneos -project TemplateApp.xcodeproj \
-      #       -configuration Release -scheme TemplateApp\
-      #       -derivedDataPath DerivedData \
-      #       -archivePath DerivedData/Archive/TemplateApp archive
+      - name: Build archive 
+        run: |
+          xcodebuild -sdk iphoneos -project TemplateApp.xcodeproj \
+            -configuration Release -scheme TemplateApp\
+            -derivedDataPath DerivedData \
+            -archivePath DerivedData/Archive/TemplateApp archive
 
-      # - name: Export Archive 
-      #   run: |
-      #     xcodebuild -exportArchive
-      #       -archivePath DerivedData/Archive/TemplateApp.xcarchive |
-      #       -exportOptionsPlist provisioning/App-Store.plist \
-      #       -exportPath DerivedData/ipa
+      - name: Export Archive 
+        run: |
+          xcodebuild -exportArchive
+            -archivePath DerivedData/Archive/TemplateApp.xcarchive |
+            -exportOptionsPlist provisioning/App-Store.plist \
+            -exportPath DerivedData/ipa
 
       # - name: Deploy App to Apple
       #   run: |
