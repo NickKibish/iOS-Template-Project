@@ -17,7 +17,7 @@ echo "Create Keychain and import certificates"
 
 echo "Create keychain"
 security create-keychain -p "$TEMP_KEYCHAIN_PASSWORD" $TEMP_KEYCHAIN_USER
-security list-keychains -s $TEMP_KEYCHAIN_USER
+security list-keychains -d user -s $TEMP_KEYCHAIN_USER
 
 echo "Set default keychain"
 security default-keychain -s $TEMP_KEYCHAIN_USER
@@ -26,7 +26,7 @@ echo "Unlock keychain"
 security unlock-keychain -p "$TEMP_KEYCHAIN_PASSWORD" $TEMP_KEYCHAIN_USER
 
 echo "Set keychain timeout"
-security set-keychain-settings -t 3600 -l 
+security set-keychain-settings -lut 21600
 
 echo "List keychains:"
 security list-keychains
@@ -35,7 +35,7 @@ echo "Import certificates"
 security import apple.cer -t cert -k "$TEMP_KEYCHAIN_USER"
 security import certificate.cer -t cert -k "$TEMP_KEYCHAIN_USER" 
 security import key.p12 -t priv -k "$TEMP_KEYCHAIN_USER" -P ""
-security set-key-partition-list -S apple:,apple-tool:,codesign: -s -k $TEMP_KEYCHAIN_PASSWORD $TEMP_KEYCHAIN_USER
+security set-key-partition-list -S apple:,apple-tool: -s -k $TEMP_KEYCHAIN_PASSWORD $TEMP_KEYCHAIN_USER
 
 echo "Import provisioning profile"
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
