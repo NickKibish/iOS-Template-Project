@@ -13,6 +13,7 @@ KEYCHAIN_PATH=~/Library/Keychains/${TEMP_KEYCHAIN_USER}.keychain
 
 echo "Create keychain"
 security create-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$TEMP_KEYCHAIN_USER".keychain
+security list-keychains -s "$KEYCHAIN_PATH"
 
 echo "Set default keychain"
 security default-keychain -s "$KEYCHAIN_PATH"
