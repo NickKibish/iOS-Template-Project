@@ -4,12 +4,12 @@ echo "Installing certificates and profiles..."
 
 echo "Decode certificates and profiles"
 
+echo $APPLE_CERT_G3 | base64 --decode -i - > apple.cer
 echo $SIGN_CER_BASE64 | base64 --decode -i - > certificate.cer 
 echo $SIGN_KEY_BASE64 | base64 --decode -i - > key.p12
 echo $SIGN_PROV_PROFILE_BASE64 | base64 --decode -i - > profile.mobileprovision
 
 echo "Ensure that keychain is not existing"
-security delete-keychain "$TEMP_KEYCHAIN_USER".keychain
 
 echo "Create Keychain and import certificates"
 KEYCHAIN_PATH=~/Library/Keychains/${TEMP_KEYCHAIN_USER}.keychain
@@ -30,6 +30,8 @@ security set-keychain-settings -t 3600 -l "$KEYCHAIN_PATH"
 echo "List keychains:"
 security list-keychains
 
+echo "Import certificates"
+security import apple.cer -t cert -k "$KEYCHAIN_PATH"
 security import certificate.cer -t cert -k "$KEYCHAIN_PATH" 
 security import key.p12 -t priv -k "$KEYCHAIN_PATH" -P ""
 security set-key-partition-list -S apple-tool:,apple: -s -k $TEMP_KEYCHAIN_PASSWORD $KEYCHAIN_PATH
