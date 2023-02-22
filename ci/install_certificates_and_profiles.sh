@@ -12,29 +12,28 @@ echo $SIGN_PROV_PROFILE_BASE64 | base64 --decode -i - > profile.mobileprovision
 echo "Ensure that keychain is not existing"
 
 echo "Create Keychain and import certificates"
-KEYCHAIN_PATH=~/Library/Keychains/${TEMP_KEYCHAIN_USER}.keychain
 
 echo "Create keychain"
-security create-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$TEMP_KEYCHAIN_USER".keychain
-security list-keychains -s "$KEYCHAIN_PATH"
+security create-keychain -p "$TEMP_KEYCHAIN_PASSWORD" $TEMP_KEYCHAIN_USER
+security list-keychains -s $TEMP_KEYCHAIN_USER
 
 echo "Set default keychain"
-security default-keychain -s "$KEYCHAIN_PATH"
+security default-keychain -s $TEMP_KEYCHAIN_USER
 
 echo "Unlock keychain"
-security unlock-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+security unlock-keychain -p "$TEMP_KEYCHAIN_PASSWORD" $TEMP_KEYCHAIN_USER
 
 echo "Set keychain timeout"
-security set-keychain-settings -t 3600 -l "$KEYCHAIN_PATH"
+security set-keychain-settings -t 3600 -l $TEMP_KEYCHAIN_USER
 
 echo "List keychains:"
 security list-keychains
 
 echo "Import certificates"
-security import apple.cer -t cert -k "$KEYCHAIN_PATH"
-security import certificate.cer -t cert -k "$KEYCHAIN_PATH" 
-security import key.p12 -t priv -k "$KEYCHAIN_PATH" -P ""
-security set-key-partition-list -S apple-tool:,apple: -s -k $TEMP_KEYCHAIN_PASSWORD $KEYCHAIN_PATH
+security import apple.cer -t cert -k "$TEMP_KEYCHAIN_USER"
+security import certificate.cer -t cert -k "$TEMP_KEYCHAIN_USER" 
+security import key.p12 -t priv -k "$TEMP_KEYCHAIN_USER" -P ""
+security set-key-partition-list -S apple-tool:,apple: -s -k $TEMP_KEYCHAIN_PASSWORD $TEMP_KEYCHAIN_USER
 
 echo "Import provisioning profile"
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
