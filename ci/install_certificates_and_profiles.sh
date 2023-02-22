@@ -9,10 +9,10 @@ echo $SIGN_KEY_BASE64 | base64 --decode -i - > key.p12
 echo $SIGN_PROV_PROFILE_BASE64 | base64 --decode -i - > profile.mobileprovision
 
 echo "Create Keychain and import certificates"
-KEYCHAIN_PATH=${TEMP_KEYCHAIN_USER}.keychain
+KEYCHAIN_PATH=~/Library/Keychains/${TEMP_KEYCHAIN_USER}.keychain
 
 echo "Create keychain"
-security create-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+security create-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$TEMP_KEYCHAIN_USER".keychain
 
 echo "Set default keychain"
 security default-keychain -s "$KEYCHAIN_PATH"
