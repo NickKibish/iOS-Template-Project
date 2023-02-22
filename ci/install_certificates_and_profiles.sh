@@ -8,6 +8,9 @@ echo $SIGN_CER_BASE64 | base64 --decode -i - > certificate.cer
 echo $SIGN_KEY_BASE64 | base64 --decode -i - > key.p12
 echo $SIGN_PROV_PROFILE_BASE64 | base64 --decode -i - > profile.mobileprovision
 
+echo "Ensure that keychain is not existing"
+security delete-keychain "$TEMP_KEYCHAIN_USER".keychain
+
 echo "Create Keychain and import certificates"
 KEYCHAIN_PATH=~/Library/Keychains/${TEMP_KEYCHAIN_USER}.keychain
 
