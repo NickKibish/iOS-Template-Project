@@ -25,7 +25,6 @@ jobs:
           chmod +x ci/install_certificates_and_profiles.sh
           ci/install_certificates_and_profiles.sh
         env:
-          TEMP_KEYCHAIN_PASSWORD: ${{ secrets.TEMP_KEYCHAIN_PASSWORD }}
           TEMP_KEYCHAIN_USER: ${{ secrets.TEMP_KEYCHAIN_USER }}
           SIGN_CER_BASE64: ${{ secrets.SIGN_CER_BASE64 }}
           SIGN_KEY_BASE64: ${{ secrets.SIGN_KEY_BASE64 }}

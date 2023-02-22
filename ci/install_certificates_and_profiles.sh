@@ -1,6 +1,7 @@
 #!/bin/sh
 
 echo "Installing certificates and profiles..."
+TEMP_KEYCHAIN_PASSWORD=""
 
 echo "Decode certificates and profiles"
 
@@ -10,6 +11,7 @@ echo $SIGN_KEY_BASE64 | base64 --decode -i - > key.p12
 echo $SIGN_PROV_PROFILE_BASE64 | base64 --decode -i - > profile.mobileprovision
 
 echo "Ensure that keychain is not existing"
+security delete-keychain $TEMP_KEYCHAIN_USER
 
 echo "Create Keychain and import certificates"
 
@@ -24,7 +26,7 @@ echo "Unlock keychain"
 security unlock-keychain -p "$TEMP_KEYCHAIN_PASSWORD" $TEMP_KEYCHAIN_USER
 
 echo "Set keychain timeout"
-security set-keychain-settings -t 3600 -l $TEMP_KEYCHAIN_USER
+security set-keychain-settings -t 3600 -l 
 
 echo "List keychains:"
 security list-keychains
