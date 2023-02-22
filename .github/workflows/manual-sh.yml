@@ -1,0 +1,58 @@
+name: Manual Deployment (Self-Hosted)
+on:
+  push:
+    branches: [ manual_build ]
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Manual iOS Build and Deploy
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Xcode version
+        run: /usr/bin/xcodebuild -version
+
+      - name: Show Dinectory Content
+        run: ls -la
+
+      - name: Setup Keychain
+        run: |
+          chmod +x ci/install_certificates_and_profiles.sh
+          ci/install_certificates_and_profiles.sh
+        env:
+          TEMP_KEYCHAIN_PASSWORD: ${{ secrets.TEMP_KEYCHAIN_PASSWORD }}
+          TEMP_KEYCHAIN_USER: ${{ secrets.TEMP_KEYCHAIN_USER }}
+          SIGN_CER_BASE64: ${{ secrets.SIGN_CER_BASE64 }}
+          SIGN_KEY_BASE64: ${{ secrets.SIGN_KEY_BASE64 }}
+          SIGN_PROV_PROFILE_BASE64: ${{ secrets.SIGN_PROV_PROFILE_BASE64 }}
+
+      - name: Build archive 
+        run: |
+          xcodebuild -sdk iphoneos -project TemplateApp.xcodeproj \
+            -configuration Release -scheme TemplateApp\
+            -derivedDataPath DerivedData \
+            -archivePath DerivedData/Archive/TemplateApp archive
+
+      - name: Export Archive 
+        run: |
+          xcodebuild -exportArchive
+            -archivePath DerivedData/Archive/TemplateApp.xcarchive |
+            -exportOptionsPlist provisioning/App-Store.plist \
+            -exportPath DerivedData/ipa
+
+      # - name: Deploy App to Apple
+      #   run: |
+      #     xcrun altool --upload-app --type ios \
+      #       -file DerivedData/ipa/CocoaHeadsNLipa|
+      #       --username "${{ secrets.appstore_connect_username 72" |
+      #       --password "${{ secrets.appstore_connect_password }}"
+      #       --verbose
