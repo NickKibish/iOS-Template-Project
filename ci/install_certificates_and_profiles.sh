@@ -11,9 +11,19 @@ echo $SIGN_PROV_PROFILE_BASE64 | base64 --decode -i - > profile.mobileprovision
 echo "Create Keychain and import certificates"
 KEYCHAIN_PATH=${TEMP_KEYCHAIN_USER}.keychain
 
+echo "Create keychain"
 security create-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+echo "Set default keychain"
 security default-keychain -s "$KEYCHAIN_PATH"
+
+echo "Unlock keychain"
 security unlock-keychain -p "$TEMP_KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+echo "Set keychain timeout"
+security set-keychain-settings -t 3600 -l "$KEYCHAIN_PATH"
+
+echo "List keychains:"
 security list-keychains
 
 security import certificate.cer -t cert -k "$KEYCHAIN_PATH" 
