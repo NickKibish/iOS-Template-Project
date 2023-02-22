@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "Installing certificates and profiles..."
-TEMP_KEYCHAIN_PASSWORD=""
+TEMP_KEYCHAIN_PASSWORD="password"
 
 echo "Decode certificates and profiles"
 
@@ -35,7 +35,7 @@ echo "Import certificates"
 security import apple.cer -t cert -k "$TEMP_KEYCHAIN_USER"
 security import certificate.cer -t cert -k "$TEMP_KEYCHAIN_USER" 
 security import key.p12 -t priv -k "$TEMP_KEYCHAIN_USER" -P ""
-security set-key-partition-list -S apple-tool:,apple: -s -k $TEMP_KEYCHAIN_PASSWORD $TEMP_KEYCHAIN_USER
+security set-key-partition-list -S apple: -k $TEMP_KEYCHAIN_PASSWORD $TEMP_KEYCHAIN_USER
 
 echo "Import provisioning profile"
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
