@@ -1,0 +1,29 @@
+name: Manual Deployment using ready action (Self-Hosted)
+on:
+  push:
+    branches: [ manual_build ]
+
+  workflow_dispatch:
+  
+
+jobs:
+  deploy:
+    name: iOS Build and Deploy with 3rd party action
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Xcode version
+        run: /usr/bin/xcodebuild -version
+
+      - name: iOS Build Action
+        uses: yukiarrr/ios-build-action@v1.5.0
+        with:
+          project-path: TemplateApp.xcodeproj
+          p12-key-base64: ${{ secrets.SIGN_KEY_BASE64 }}
+          p12-cer-base64: ${{ secrets.SIGN_CER_BASE64 }}
+          mobileprovision-base64: ${{ secrets.SIGN_PROV_PROFILE_BASE64 }}
+          code-signing-identity: iOS Distribution
+          team-id: ${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}
