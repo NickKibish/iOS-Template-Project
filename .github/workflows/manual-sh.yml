@@ -42,7 +42,10 @@ jobs:
 
       - name: Export Archive 
         run: |
-          xcodebuild -exportArchive -archivePath DerivedData/Archive/TemplateApp.xcarchive -exportOptionsPlist ci/ExportOptions.plist -exportPath DerivedData/ipa
+          xcodebuild -exportArchive \
+            -archivePath DerivedData/Archive/TemplateApp.xcarchive \
+            -exportOptionsPlist ci/ExportOptions.plist \
+            -exportPath DerivedData/ipa
 
       # - name: Deploy App to Apple
       #   run: |
