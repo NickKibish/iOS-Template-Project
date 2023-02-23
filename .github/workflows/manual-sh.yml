@@ -38,12 +38,12 @@ jobs:
             -derivedDataPath DerivedData \
             -archivePath DerivedData/Archive/TemplateApp archive
 
-      - name: Export Archive 
-        run: |
-          xcodebuild -exportArchive
-            -archivePath DerivedData/Archive/TemplateApp.xcarchive |
-            -exportOptionsPlist provisioning/App-Store.plist \
-            -exportPath DerivedData/ipa
+      # - name: Export Archive 
+      #   run: |
+      #     xcodebuild -exportArchive
+      #       -archivePath DerivedData/Archive/TemplateApp.xcarchive |
+      #       -exportOptionsPlist provisioning/App-Store.plist \
+      #       -exportPath DerivedData/ipa
 
       # - name: Deploy App to Apple
       #   run: |
