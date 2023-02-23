@@ -43,7 +43,7 @@ jobs:
       - name: Export Archive 
         run: |
           xcodebuild -exportArchive
-            -archivePath DerivedData/Archive/TemplateApp.xcarchive |
+            -archivePath DerivedData/Archive/TemplateApp.xcarchive \
             -exportOptionsPlist ci/ExportOptions.plist \
             -exportPath DerivedData/ipa
 
