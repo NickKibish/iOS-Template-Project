@@ -4,6 +4,7 @@ on:
     branches: [ manual_build ]
 
   workflow_dispatch:
+  
 
 jobs:
   deploy:
