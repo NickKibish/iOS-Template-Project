@@ -32,10 +32,10 @@ echo "List keychains:"
 security list-keychains
 
 echo "Import certificates"
-security import apple.cer -t cert -k "$TEMP_KEYCHAIN_USER"
-security import certificate.cer -t cert -k "$TEMP_KEYCHAIN_USER" 
-security import key.p12 -t priv -k "$TEMP_KEYCHAIN_USER" -P ""
-security set-key-partition-list -S apple:,apple-tool: -s -k $TEMP_KEYCHAIN_PASSWORD $TEMP_KEYCHAIN_USER
+security import apple.cer -t cert 
+security import certificate.cer -t cert -k 
+security import key.p12 -t priv -P ""
+security set-key-partition-list -S apple:,apple-tool: -s -k $TEMP_KEYCHAIN_PASSWORD 
 
 echo "Import provisioning profile"
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
