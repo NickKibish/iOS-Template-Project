@@ -179,7 +179,7 @@ platform :ios do
       capture_ios_screenshots
     end
 
-    upload
+    # upload
   end
 
   desc "Take screenshots and upload to AppStore"
