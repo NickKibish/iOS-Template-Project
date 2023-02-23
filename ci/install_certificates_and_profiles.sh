@@ -35,7 +35,7 @@ security import certificate.cer -t cert -k -A
 security import key.p12 -t priv -P "" -A 
 
 security list-keychains -d user -s $TEMP_KEYCHAIN_USER
-# security set-key-partition-list -S apple:,apple-tool: -s -k $TEMP_KEYCHAIN_PASSWORD 
+security set-key-partition-list -S apple:,apple-tool: -s -k $TEMP_KEYCHAIN_PASSWORD 
 
 echo "Import provisioning profile"
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
