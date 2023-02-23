@@ -1,7 +1,6 @@
 #!/bin/sh
 
 echo "Installing certificates and profiles..."
-TEMP_KEYCHAIN_PASSWORD="password"
 
 echo "Decode certificates and profiles"
 

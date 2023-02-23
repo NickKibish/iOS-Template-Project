@@ -26,6 +26,7 @@ jobs:
           ci/install_certificates_and_profiles.sh
         env:
           TEMP_KEYCHAIN_USER: ${{ secrets.TEMP_KEYCHAIN_USER }}
+          TEMP_KEYCHAIN_PASSWORD: '${{ secrets.TEMP_KEYCHAIN_PASSWORD }}'
           SIGN_CER_BASE64: ${{ secrets.SIGN_CER_BASE64 }}
           SIGN_KEY_BASE64: ${{ secrets.SIGN_KEY_BASE64 }}
           SIGN_PROV_PROFILE_BASE64: ${{ secrets.SIGN_PROV_PROFILE_BASE64 }}
