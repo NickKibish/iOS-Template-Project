@@ -30,8 +30,8 @@ echo "List keychains:"
 security list-keychains
 
 echo "Import certificates"
-security import apple.cer -t cert -A
-security import certificate.cer -t cert -k -A 
+security import apple.cer -t cert
+security import certificate.cer -t cert -k
 security import key.p12 -t priv -P "" -A 
 
 security list-keychains -d user -s $TEMP_KEYCHAIN_USER
