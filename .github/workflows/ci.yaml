@@ -1,7 +1,7 @@
 name: CD 
 on: 
   push:
-    branches: [main]
+    branches: [main, manual_build]
 
 jobs:
   deploy:
