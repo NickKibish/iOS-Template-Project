@@ -92,3 +92,4 @@ iOSInjectionProject/
 
 .env*
 TemplateApp.app
+private_keys/

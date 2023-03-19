@@ -1,0 +1,25 @@
+name: CD 
+on: 
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and Deploy 
+        run: |
+          sh ci/build_and_deploy.sh
+        env:
+          APPLE_CERT_G3: ${{ secrets.APPLE_CERT_G3 }}
+          SIGN_CER_BASE64: ${{ secrets.SIGN_CER_BASE64 }}
+          SIGN_KEY_BASE64: ${{ secrets.SIGN_KEY_BASE64 }}
+          SIGN_PROV_PROFILE_BASE64: ${{ secrets.SIGN_PROV_PROFILE_BASE64 }}
+          PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}
+          TEMP_KEYCHAIN_USER: ${{ secrets.TEMP_KEYCHAIN_USER }}
+          TEMP_KEYCHAIN_PASSWORD: ${{ secrets.TEMP_KEYCHAIN_PASSWORD }}
+          XC_SCHEME: ${{ secrets.XC_SCHEME }}
+          APPLE_KEY_ID: ${{ secrets.APPLE_KEY_ID }}
+          APPLE_ISSUER_ID: ${{ secrets.APPLE_ISSUER_ID }}
