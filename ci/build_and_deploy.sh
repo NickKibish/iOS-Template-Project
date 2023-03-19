@@ -51,7 +51,7 @@ if [[ ! -z "$CI" ]]; then # Installing certificates and profiles
 
     echo "Import provisioning profile"
     mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-    cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+    cp $PROVISIONING_PROFILE_SPECIFIER.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/$PROVISIONING_PROFILE_SPECIFIER.mobileprovision
     ls -la ~/Library/MobileDevice/Provisioning\ Profiles/
 fi
 
