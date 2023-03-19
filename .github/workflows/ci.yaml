@@ -22,6 +22,6 @@ jobs:
           PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}
           TEMP_KEYCHAIN_USER: ${{ secrets.TEMP_KEYCHAIN_USER }}
           TEMP_KEYCHAIN_PASSWORD: ${{ secrets.TEMP_KEYCHAIN_PASSWORD }}
-          XC_SCHEME: ${{ env.XC_SCHEME }}
+          XC_SCHEME: TemplateApp
           APPLE_KEY_ID: ${{ secrets.APPLE_KEY_ID }}
           APPLE_ISSUER_ID: ${{ secrets.APPLE_ISSUER_ID }}
