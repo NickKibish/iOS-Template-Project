@@ -43,7 +43,7 @@ if [[ ! -z "$CI" ]]; then # Installing certificates and profiles
 
     echo "Import certificates"
     security import apple.cer -t cert
-    security import certificate.cer -t cert -k
+    security import certificate.cer -t cert
     security import key.p12 -t priv -P "" -A 
 
     security list-keychains -d user -s $TEMP_KEYCHAIN_USER
